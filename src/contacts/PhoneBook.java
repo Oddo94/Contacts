@@ -19,17 +19,17 @@ public class PhoneBook {
         return -1;
     }
 
-    public int removeContact(Contact contact) {
-        boolean hasRemovedContact = contactsList.remove(contact);
+//    public int removeContact(Contact contact) {
+//        boolean hasRemovedContact = contactsList.remove(contact);
+//
+//        if(hasRemovedContact) {
+//            return 0;
+//        }
+//
+//        return -1;
+//    }
 
-        if(hasRemovedContact) {
-            return 0;
-        }
-
-        return -1;
-    }
-
-    public int removeContact2(int contactIndex) {
+    public int removeContact(int contactIndex) {
         Contact contact = contactsList.remove(contactIndex);
 
         if(contact != null) {
@@ -40,23 +40,42 @@ public class PhoneBook {
     }
 
 
-    public int editRecord(int recordNumber, Contact editedContact) {
+    public int editRecord(int recordNumber, EditedElement editedElement, String newValue) {
         int recordIndex = recordNumber - 1;
 
-        Contact contactToEdit = contactsList.get(recordIndex);
+        switch(editedElement) {
+            case NAME:
+                contactsList.get(recordIndex).setName(newValue);
+                break;
 
-        String newName = editedContact.getName() != null ? editedContact.getName() : contactToEdit.getName();
-        String newSurname = editedContact.getSurname() != null ? editedContact.getSurname() : contactToEdit.getSurname();
-        String newPhoneNumber = editedContact.getPhoneNumber() != null ? editedContact.getPhoneNumber() : contactToEdit.getPhoneNumber();
+            case SURNAME:
+                contactsList.get(recordIndex).setSurname(newValue);
+                break;
 
+            case PHONE_NUMBER:
+                contactsList.get(recordIndex).setPhoneNumber(newValue);
+                break;
 
-
-
-        contactToEdit.setName(newName);
-        contactToEdit.setSurname(newSurname);
-        contactToEdit.setPhoneNumber(newPhoneNumber);
+            default:
+                return -1;
+        }
 
         return 0;
+
+//        Contact contactToEdit = contactsList.get(recordIndex);
+//
+//        String newName = editedContact.getName() != null ? editedContact.getName() : contactToEdit.getName();
+//        String newSurname = editedContact.getSurname() != null ? editedContact.getSurname() : contactToEdit.getSurname();
+//        String newPhoneNumber = editedContact.getPhoneNumber() != null ? editedContact.getPhoneNumber() : contactToEdit.getPhoneNumber();
+//
+//
+//
+//
+//        contactToEdit.setName(newName);
+//        contactToEdit.setSurname(newSurname);
+//        contactToEdit.setPhoneNumber(newPhoneNumber);
+//
+//        return 0;
     }
 
     public int getNumberOfContacts() {

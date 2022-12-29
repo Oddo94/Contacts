@@ -8,9 +8,9 @@ public class CountCommand implements Command {
     }
 
     @Override
-    public int execute() {
+    public void execute() {
         int totalContacts = phoneBook.getNumberOfContacts();
 
-        return totalContacts;
+        System.out.println(String.format("The Phone Book has %d records.", totalContacts));
     }
 }

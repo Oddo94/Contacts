@@ -6,7 +6,7 @@ public class Invoker {
     public void setCommand(Command command) {
         this.command = command;
     }
-    public int executeCommand() {
-        return command.execute();
+    public void executeCommand() {
+        command.execute();
     }
 }

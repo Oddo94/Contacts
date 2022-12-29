@@ -9,9 +9,8 @@ public class ListCommand implements Command {
         this.phoneBook = phoneBook;
     }
 
-
     @Override
-    public int execute() {
+    public void execute() {
         List<Contact> contactList = phoneBook.getContactsList();
 
         if( contactList.size() > 0) {
@@ -21,10 +20,6 @@ public class ListCommand implements Command {
                 String contactToPrint = String.format("%d. %s", contactNumber, currentContact.toString());
                 System.out.println(contactToPrint);
             }
-
-            return 0;
         }
-
-        return -1;
     }
 }
