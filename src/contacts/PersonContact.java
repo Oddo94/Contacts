@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class PersonContact extends Contact {
     private String name;
     private String surname;
-    private LocalDate birthday;
+    private LocalDate birthDate;
     private Gender gender;
     private ArrayList<String> blackList;
 
@@ -79,7 +79,8 @@ public class PersonContact extends Contact {
     public String toString() {
         //String displayedPhoneNumber = !"".equals(this.phoneNumber) ? this.phoneNumber : "[no number]";
 
-        return String.format("%s %s, %s", this.name, this.surname, this.phoneNumber);
+        return String.format("Name: %s\nSurname: %s\nBirth date: %s\nGender: %s\nNumber: %s\nTime created: %s\nTime last edit: %s",
+                this.name, this.surname, this.birthDate, this.gender, this.phoneNumber, this.creationDate, this.updatedDate);
     }
 
 

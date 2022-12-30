@@ -3,5 +3,8 @@ package contacts.utils.enums;
 public enum EditedElement {
     NAME,
     SURNAME,
-    PHONE_NUMBER
+    BIRTH_DATE,
+    GENDER,
+    PHONE_NUMBER,
+    ADDRESS
 }

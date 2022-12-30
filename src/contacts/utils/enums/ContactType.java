@@ -2,6 +2,6 @@ package contacts.utils.enums;
 
 public enum ContactType {
     PERSON,
-    ORGANIZATION,
+    COMPANY,
     UNDEFINED
 }

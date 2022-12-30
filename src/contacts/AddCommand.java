@@ -23,10 +23,26 @@ public class AddCommand implements Command {
         System.out.println("Enter the type (person, organization):");
         ContactType contactType = getContactType(scanner.nextLine());
 
-        if(contactType == ContactType.UNDEFINED) {
+        Contact contact = null;
+        if(contactType == ContactType.PERSON) {
+            contact = getPersonContact();
+        } else if (contactType == ContactType.COMPANY) {
+            contact = getCompanyContact();
+        } else {
             System.out.println("Bad contact type!");
+            return;
         }
 
+        int executionResult = phoneBook.addContact(contact);
+
+        if (executionResult == -1) {
+            System.out.println("Unable to add the specified record!");
+        } else {
+            System.out.println("The record added.");
+        }
+    }
+
+    private PersonContact getPersonContact() {
         System.out.println("Enter the gender (M, F):");
         Gender gender = getGender(scanner.nextLine());
 
@@ -54,15 +70,25 @@ public class AddCommand implements Command {
         System.out.println("Enter the number:");
         String phoneNumber = scanner.nextLine();
 
-        PersonContact contact = new PersonContact(name, surname, phoneNumber, birthDay, gender, LocalDateTime.now(), null);
+        PersonContact personContact = new PersonContact(name, surname, phoneNumber, birthDay, gender, LocalDateTime.now(), null);
 
-        int executionResult = phoneBook.addContact(contact);
+        return personContact;
 
-        if (executionResult == -1) {
-            System.out.println("Unable to add the specified record!");
-        } else {
-            System.out.println("The record added.");
-        }
+    }
+
+    private CompanyContact getCompanyContact() {
+        System.out.println("Enter the organization name:");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter the address:");
+        String address = scanner.nextLine();
+
+        System.out.println("Enter the number:");
+        String number = scanner.nextLine();
+
+        CompanyContact companyContact = new CompanyContact(name, address, number, LocalDateTime.now(), null);
+
+        return companyContact;
     }
 
     private ContactType getContactType(String input) {
@@ -73,7 +99,7 @@ public class AddCommand implements Command {
                 break;
 
             case "organization":
-                contactType = ContactType.ORGANIZATION;
+                contactType = ContactType.COMPANY;
                 break;
 
             default:

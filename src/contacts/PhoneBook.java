@@ -1,17 +1,19 @@
 package contacts;
 
+import contacts.utils.enums.ContactType;
 import contacts.utils.enums.EditedElement;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class PhoneBook {
-    private ArrayList<PersonContact> contactsList;
+    private ArrayList<Contact> contactsList;
 
     public PhoneBook() {
         this.contactsList = new ArrayList<>();
     }
 
-    public int addContact(PersonContact contact) {
+    public int addContact(Contact contact) {
         boolean hasInsertedRecord = contactsList.add(contact);
 
         if(hasInsertedRecord) {
@@ -32,7 +34,7 @@ public class PhoneBook {
 //    }
 
     public int removeContact(int contactIndex) {
-        PersonContact contact = contactsList.remove(contactIndex);
+        Contact contact = contactsList.remove(contactIndex);
 
         if(contact != null) {
             return 0;
@@ -42,20 +44,41 @@ public class PhoneBook {
     }
 
 
-    public int editRecord(int recordNumber, EditedElement editedElement, String newValue) {
+    public Contact getContactByIndex(int index) {
+        return contactsList.get(index);
+    }
+
+    public int editRecord(int recordNumber, ContactType contactType, EditedElement editedElement, String newValue) {
+        int executionResult = -1;
         int recordIndex = recordNumber - 1;
+
+        if(contactType == ContactType.PERSON) {
+            executionResult = editPersonRecord(recordNumber, contactType, editedElement, newValue);
+        } else if(contactType == ContactType.COMPANY) {
+            executionResult = editCompanyRecord(recordNumber, contactType, editedElement, newValue);
+        }
+
+        return executionResult;
+
+    }
+
+    private int editPersonRecord(int recordIndex, ContactType contactType, EditedElement editedElement, String newValue) {
+        PersonContact personContact = (PersonContact) contactsList.get(recordIndex);
 
         switch(editedElement) {
             case NAME:
-                contactsList.get(recordIndex).setName(newValue);
+                personContact.setName(newValue);
+                personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 
             case SURNAME:
-                contactsList.get(recordIndex).setSurname(newValue);
+                personContact.setSurname(newValue);
+                personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 
             case PHONE_NUMBER:
-                contactsList.get(recordIndex).setPhoneNumber(newValue);
+                personContact.setPhoneNumber(newValue);
+                personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 
             default:
@@ -63,28 +86,35 @@ public class PhoneBook {
         }
 
         return 0;
+    }
 
-//        Contact contactToEdit = contactsList.get(recordIndex);
-//
-//        String newName = editedContact.getName() != null ? editedContact.getName() : contactToEdit.getName();
-//        String newSurname = editedContact.getSurname() != null ? editedContact.getSurname() : contactToEdit.getSurname();
-//        String newPhoneNumber = editedContact.getPhoneNumber() != null ? editedContact.getPhoneNumber() : contactToEdit.getPhoneNumber();
-//
-//
-//
-//
-//        contactToEdit.setName(newName);
-//        contactToEdit.setSurname(newSurname);
-//        contactToEdit.setPhoneNumber(newPhoneNumber);
-//
-//        return 0;
+    private int editCompanyRecord(int recordIndex, ContactType contactType, EditedElement editedElement, String newValue) {
+        CompanyContact companyContact = (CompanyContact) contactsList.get(recordIndex);
+
+        switch(editedElement) {
+            case ADDRESS:
+                companyContact.setAddress(newValue);
+                companyContact.setUpdatedDate(LocalDateTime.now());
+                break;
+
+            case PHONE_NUMBER:
+                companyContact.setPhoneNumber(newValue);
+                companyContact.setUpdatedDate(LocalDateTime.now());
+                break;
+
+            default:
+                return -1;
+        }
+
+        return 0;
     }
 
     public int getNumberOfContacts() {
         return contactsList.size();
     }
 
-    public ArrayList<PersonContact> getContactsList() {
+    public ArrayList<Contact> getContactsList() {
         return this.contactsList;
     }
+
 }

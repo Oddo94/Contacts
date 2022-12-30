@@ -34,6 +34,21 @@ public abstract class Contact {
         }
     }
 
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setUpdatedDate(LocalDateTime updatedDate) {
+        this.updatedDate = updatedDate;
+    }
 
     private boolean isValid(String number) {
 
