@@ -11,11 +11,11 @@ public class ListCommand implements Command {
 
     @Override
     public void execute() {
-        List<Contact> contactList = phoneBook.getContactsList();
+        List<PersonContact> contactList = phoneBook.getContactsList();
 
         if( contactList.size() > 0) {
             for(int i = 0; i < contactList.size(); i++) {
-                Contact currentContact = contactList.get(i);
+                PersonContact currentContact = contactList.get(i);
                 int contactNumber = 1 + i;
                 String contactToPrint = String.format("%d. %s", contactNumber, currentContact.toString());
                 System.out.println(contactToPrint);

@@ -17,20 +17,20 @@ public class InputManager {
         commandInvoker = new Invoker();
     }
 
-    public Contact getContact() {
-        System.out.println("Enter the name: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter the surname: ");
-        String surname = scanner.nextLine();
-
-        System.out.println("Enter the number:");
-        String phoneNumber = scanner.nextLine();
-
-        Contact contact = new Contact(name, surname, phoneNumber);
-
-        return contact;
-    }
+//    public Contact getContact() {
+//        System.out.println("Enter the name: ");
+//        String name = scanner.nextLine();
+//
+//        System.out.println("Enter the surname: ");
+//        String surname = scanner.nextLine();
+//
+//        System.out.println("Enter the number:");
+//        String phoneNumber = scanner.nextLine();
+//
+//        Contact contact = new Contact(name, surname, phoneNumber);
+//
+//        return contact;
+//    }
 
     public void manageUserInput() {
         int displayExecutionResult;

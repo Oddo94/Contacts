@@ -1,5 +1,7 @@
 package contacts;
 
+import contacts.utils.enums.EditedElement;
+
 import java.util.Scanner;
 
 public class EditCommand implements Command {

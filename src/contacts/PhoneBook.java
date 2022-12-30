@@ -1,15 +1,17 @@
 package contacts;
 
+import contacts.utils.enums.EditedElement;
+
 import java.util.ArrayList;
 
 public class PhoneBook {
-    private ArrayList<Contact> contactsList;
+    private ArrayList<PersonContact> contactsList;
 
     public PhoneBook() {
         this.contactsList = new ArrayList<>();
     }
 
-    public int addContact(Contact contact) {
+    public int addContact(PersonContact contact) {
         boolean hasInsertedRecord = contactsList.add(contact);
 
         if(hasInsertedRecord) {
@@ -30,7 +32,7 @@ public class PhoneBook {
 //    }
 
     public int removeContact(int contactIndex) {
-        Contact contact = contactsList.remove(contactIndex);
+        PersonContact contact = contactsList.remove(contactIndex);
 
         if(contact != null) {
             return 0;
@@ -82,7 +84,7 @@ public class PhoneBook {
         return contactsList.size();
     }
 
-    public ArrayList<Contact> getContactsList() {
+    public ArrayList<PersonContact> getContactsList() {
         return this.contactsList;
     }
 }
