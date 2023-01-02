@@ -1,6 +1,7 @@
 package contacts;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CompanyContact extends Contact {
     private String organizationName;
@@ -29,6 +30,10 @@ public class CompanyContact extends Contact {
     }
 
     public String toString() {
-        return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s", this.organizationName, this.address, this.phoneNumber, this.creationDate, this.updatedDate);
+        DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        String formattedCreationDate = this.creationDate.format(customFormat);
+        String formattedUpdatedDate = this.updatedDate.format(customFormat);
+
+        return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s", this.organizationName, this.address, this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
     }
 }

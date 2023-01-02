@@ -12,5 +12,7 @@ public class CountCommand implements Command {
         int totalContacts = phoneBook.getNumberOfContacts();
 
         System.out.println(String.format("The Phone Book has %d records.", totalContacts));
+
+        System.out.println();
     }
 }

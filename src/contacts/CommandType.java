@@ -5,6 +5,6 @@ public enum CommandType {
     REMOVE,
     EDIT,
     COUNT,
-    LIST,
+    INFO,
     EXIT
 }

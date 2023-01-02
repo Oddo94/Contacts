@@ -24,13 +24,15 @@ public class EditCommand implements Command {
             return;
         }
 
+        phoneBook.displayContacts(phoneBook.getContactsList(), false);
+
         System.out.println("Select a record:");
         int recordNumber = scanner.nextInt();
         scanner.nextLine();
         int actualIndex = recordNumber - 1;
 
 
-        Class contactClass = phoneBook.getContactByIndex(recordNumber).getClass();
+        Class contactClass = phoneBook.getContactByIndex(actualIndex).getClass();
 
         if(contactClass == PersonContact.class) {
             executionResult = updatePersonContact(actualIndex);
@@ -46,6 +48,7 @@ public class EditCommand implements Command {
             System.out.println("The record updated!");
         }
 
+        System.out.println();
 
     }
 

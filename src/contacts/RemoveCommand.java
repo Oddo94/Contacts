@@ -18,20 +18,23 @@ public class RemoveCommand implements Command {
             return;
         }
 
+        //Displays the phone book record names
+        phoneBook.displayContacts(phoneBook.getContactsList(), false);
+
         System.out.println("Select a record:");
         int recordNumber = scanner.nextInt();
         scanner.nextLine();
 
         int lowerBoundIndex = 0;
-        int realIndex = recordNumber - 1;
+        int actualIndex = recordNumber - 1;
         int upperBoundIndex = phoneBook.getContactsList().size() - 1;
 
         //Checks if the index is out of bounds
-        if(realIndex < lowerBoundIndex || realIndex > upperBoundIndex) {
+        if(actualIndex < lowerBoundIndex || actualIndex > upperBoundIndex) {
             System.out.println("The provided index is out of bounds!");
         }
 
-        int executionResult = phoneBook.removeContact(realIndex);
+        int executionResult = phoneBook.removeContact(actualIndex);
 
         if(executionResult == -1) {
             System.out.println("Unable to remove the specified record!");
@@ -39,5 +42,6 @@ public class RemoveCommand implements Command {
             System.out.println("The record removed!");
         }
 
+        System.out.println();
     }
 }

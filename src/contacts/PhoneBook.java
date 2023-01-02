@@ -2,9 +2,12 @@ package contacts;
 
 import contacts.utils.enums.ContactType;
 import contacts.utils.enums.EditedElement;
+import contacts.utils.enums.Gender;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PhoneBook {
     private ArrayList<Contact> contactsList;
@@ -22,16 +25,6 @@ public class PhoneBook {
 
         return -1;
     }
-
-//    public int removeContact(Contact contact) {
-//        boolean hasRemovedContact = contactsList.remove(contact);
-//
-//        if(hasRemovedContact) {
-//            return 0;
-//        }
-//
-//        return -1;
-//    }
 
     public int removeContact(int contactIndex) {
         Contact contact = contactsList.remove(contactIndex);
@@ -76,6 +69,18 @@ public class PhoneBook {
                 personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 
+            case BIRTH_DATE:
+                LocalDate birthDate = LocalDate.parse(newValue);
+                personContact.setBirthDate(birthDate);
+                personContact.setUpdatedDate(LocalDateTime.now());
+                break;
+
+            case GENDER:
+                Gender gender = getGender(newValue);
+                personContact.setGender(gender);
+                personContact.setUpdatedDate(LocalDateTime.now());
+                break;
+
             case PHONE_NUMBER:
                 personContact.setPhoneNumber(newValue);
                 personContact.setUpdatedDate(LocalDateTime.now());
@@ -115,6 +120,71 @@ public class PhoneBook {
 
     public ArrayList<Contact> getContactsList() {
         return this.contactsList;
+    }
+
+    public void displayContacts(List<Contact> contactList, boolean showDetails) {
+        if( contactList.size() > 0) {
+            for(int i = 0; i < contactList.size(); i++) {
+                Contact currentContact = contactList.get(i);
+                int contactNumber = 1 + i;
+                //String contactToPrint = String.format("%d. %s", contactNumber, currentContact.toString());
+                //System.out.println(contactToPrint);
+
+                String contactListEntry = null;
+                if(currentContact.getClass() == PersonContact.class) {
+                    PersonContact personContact = (PersonContact) currentContact;
+                    if(showDetails) {
+                        System.out.println(personContact.toString());
+                    } else {
+                        contactListEntry = String.format("%d. %s %s", contactNumber, personContact.getName(), personContact.getSurname());
+                        System.out.println(contactListEntry);
+                    }
+
+                } else if(currentContact.getClass() == CompanyContact.class) {
+                    CompanyContact companyContact = (CompanyContact) currentContact;
+                    if(showDetails) {
+                        System.out.println(companyContact.toString());
+                    } else {
+                        contactListEntry = String.format("%d. %s", contactNumber, companyContact.getOrganizationName());
+                        System.out.println(contactListEntry);
+                    }
+                }
+            }
+        }
+    }
+
+    public void displayContactByIndex(int index, List<Contact> contactList) {
+        int lowerBound = 0;
+        int upperBound = contactList.size() - 1;
+
+        if (index < lowerBound || index > upperBound) {
+            System.out.println("Invalid index for the specified contact!");
+            return;
+        }
+
+        Contact searchedContact = contactList.get(index);
+
+        if (searchedContact.getClass() == PersonContact.class) {
+            PersonContact personContact = (PersonContact) searchedContact;
+            System.out.println(personContact.toString());
+        } else if (searchedContact.getClass() == CompanyContact.class) {
+            CompanyContact companyContact = (CompanyContact) searchedContact;
+            System.out.println(companyContact.toString());
+        }
+
+        System.out.println();
+    }
+
+    private Gender getGender(String userInput) {
+        Gender gender = Gender.UNDEFINED;
+
+        if ( "M".equals(userInput)) {
+            gender = Gender.MALE;
+        } else if ("F".equals(userInput)) {
+            gender = Gender.FEMALE;
+        }
+
+        return gender;
     }
 
 }

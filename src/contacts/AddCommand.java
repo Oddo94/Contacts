@@ -6,7 +6,6 @@ import contacts.utils.enums.Gender;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
@@ -40,9 +39,26 @@ public class AddCommand implements Command {
         } else {
             System.out.println("The record added.");
         }
+
+        System.out.println();
     }
 
     private PersonContact getPersonContact() {
+        System.out.println("Enter the name: ");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter the surname: ");
+        String surname = scanner.nextLine();
+
+        System.out.println("Enter the birth date:");
+        LocalDate birthDay = null;
+        try {
+            birthDay =  getBirthday(scanner.nextLine());
+        } catch(DateTimeParseException ex) {
+            System.out.println("Bad birth date!");
+            birthDay = null;
+        }
+
         System.out.println("Enter the gender (M, F):");
         Gender gender = getGender(scanner.nextLine());
 
@@ -50,27 +66,10 @@ public class AddCommand implements Command {
             System.out.println("Bad gender!");
         }
 
-        System.out.println("Enter the birth date(DD-MM-YYYY):");
-        LocalDate birthDay = null;
-
-        try {
-            birthDay =  getBirthday(scanner.nextLine());
-        } catch(DateTimeParseException ex) {
-            System.out.println("Bad birth date!");
-        }
-
-        System.out.println();
-
-        System.out.println("Enter the name: ");
-        String name = scanner.nextLine();
-
-        System.out.println("Enter the surname: ");
-        String surname = scanner.nextLine();
-
         System.out.println("Enter the number:");
         String phoneNumber = scanner.nextLine();
 
-        PersonContact personContact = new PersonContact(name, surname, phoneNumber, birthDay, gender, LocalDateTime.now(), null);
+        PersonContact personContact = new PersonContact(name, surname, phoneNumber, birthDay, gender, LocalDateTime.now(), LocalDateTime.now());
 
         return personContact;
 
@@ -86,7 +85,7 @@ public class AddCommand implements Command {
         System.out.println("Enter the number:");
         String number = scanner.nextLine();
 
-        CompanyContact companyContact = new CompanyContact(name, address, number, LocalDateTime.now(), null);
+        CompanyContact companyContact = new CompanyContact(name, address, number, LocalDateTime.now(), LocalDateTime.now());
 
         return companyContact;
     }
@@ -130,7 +129,7 @@ public class AddCommand implements Command {
     }
 
     private LocalDate getBirthday(String input) throws DateTimeParseException {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthDay = LocalDate.parse(input, dateTimeFormatter);
 
         return birthDay;
