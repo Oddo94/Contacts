@@ -1,7 +1,9 @@
 package contacts;
 
-import java.time.LocalDate;
+import contacts.utils.enums.EditedElement;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public abstract class Contact {
     protected String phoneNumber;
@@ -67,4 +69,10 @@ public abstract class Contact {
             return false;
         }
     }
+
+    protected abstract ArrayList<EditedElement> getUpdateableFields();
+
+    protected abstract void updateSelectedField(EditedElement editedElement, String newValue);
+
+    protected abstract String getSelectedField(EditedElement editedElement);
 }

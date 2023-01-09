@@ -1,7 +1,13 @@
 package contacts;
 
+import contacts.utils.enums.EditedElement;
+import contacts.utils.enums.Gender;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class CompanyContact extends Contact {
     private String organizationName;
@@ -35,5 +41,46 @@ public class CompanyContact extends Contact {
         String formattedUpdatedDate = this.updatedDate.format(customFormat);
 
         return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s", this.organizationName, this.address, this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
+    }
+
+    @Override
+    protected ArrayList<EditedElement> getUpdateableFields() {
+        ArrayList<EditedElement> updateableFields = new ArrayList<>(Arrays.asList(EditedElement.NAME, EditedElement.ADDRESS, EditedElement.PHONE_NUMBER));
+
+        return updateableFields;
+    }
+
+    @Override
+    protected void updateSelectedField(EditedElement editedElement, String newValue) {
+        switch(editedElement) {
+            case NAME:
+                this.organizationName = newValue;
+
+            case ADDRESS:
+                this.address = newValue;
+
+            case PHONE_NUMBER:
+                super.setPhoneNumber(newValue);
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected String getSelectedField(EditedElement editedElement) {
+        switch (editedElement) {
+            case NAME:
+                return this.organizationName;
+
+            case ADDRESS:
+                return this.address;
+
+            case PHONE_NUMBER:
+                return this.phoneNumber;
+
+            default:
+                return null;
+        }
     }
 }

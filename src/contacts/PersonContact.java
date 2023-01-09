@@ -1,5 +1,6 @@
 package contacts;
 
+import contacts.utils.enums.EditedElement;
 import contacts.utils.enums.Gender;
 
 import java.time.LocalDate;
@@ -89,6 +90,63 @@ public class PersonContact extends Contact {
             return true;
         } else {
             return false;
+        }
+    }
+
+    @Override
+    protected ArrayList<EditedElement> getUpdateableFields() {
+        ArrayList<EditedElement> updateableFields = new ArrayList<>(Arrays.asList(EditedElement.NAME, EditedElement.SURNAME, EditedElement.BIRTH_DATE, EditedElement.GENDER, EditedElement.PHONE_NUMBER));
+
+        return updateableFields;
+    }
+
+    @Override
+    protected void updateSelectedField(EditedElement editedElement, String newValue) {
+        switch(editedElement) {
+            case NAME:
+                this.name = newValue;
+
+            case SURNAME:
+                this.surname = newValue;
+
+            case BIRTH_DATE:
+                this.birthDate = LocalDate.parse(newValue);
+
+            case GENDER:
+                if("M".equals(newValue)) {
+                    this.gender = Gender.MALE;
+                } else if("F".equals(newValue)) {
+                    this.gender = Gender.FEMALE;
+                }
+
+            case PHONE_NUMBER:
+                super.setPhoneNumber(newValue);
+
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected String getSelectedField(EditedElement editedElement) {
+        switch(editedElement) {
+            case NAME:
+                return this.name;
+
+            case SURNAME:
+               return this.surname;
+
+            case BIRTH_DATE:
+               return this.birthDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            case GENDER:
+                return this.gender.getGenderName();
+
+            case PHONE_NUMBER:
+                return this.phoneNumber;
+
+            default:
+                return null;
         }
     }
 }
