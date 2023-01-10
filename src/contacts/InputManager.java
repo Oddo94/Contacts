@@ -1,5 +1,7 @@
 package contacts;
 
+import contacts.commands.*;
+
 import java.util.Scanner;
 
 public class InputManager {
@@ -18,7 +20,7 @@ public class InputManager {
         Command currentCommand;
 
         while (true) {
-            System.out.println("Enter action (add, remove, edit, count, info, exit):");
+            System.out.println("[menu] Enter action (add, list, search, count, exit):");
             String userInput = scanner.nextLine();
 
             switch(userInput) {
@@ -27,25 +29,30 @@ public class InputManager {
                     executeCurrentCommand(currentCommand, this.commandInvoker);
                     break;
 
-                case "remove":
-                    currentCommand = new RemoveCommand(this.phoneBook);
+
+                case "list":
+                    currentCommand = new InfoCommand(this.phoneBook);
                     executeCurrentCommand(currentCommand, this.commandInvoker);
                     break;
 
-                case "edit" :
-                    currentCommand = new EditCommand(this.phoneBook);
-                    executeCurrentCommand(currentCommand, this.commandInvoker);
+                case "search":
                     break;
+
+//                case "remove":
+//                    currentCommand = new RemoveCommand(this.phoneBook);
+//                    executeCurrentCommand(currentCommand, this.commandInvoker);
+//                    break;
+
+//                case "edit" :
+//                    currentCommand = new EditCommand(this.phoneBook);
+//                    executeCurrentCommand(currentCommand, this.commandInvoker);
+//                    break;
 
                 case "count":
                     currentCommand = new CountCommand(this.phoneBook);
                     executeCurrentCommand(currentCommand, this.commandInvoker);
                     break;
 
-                case "info":
-                    currentCommand = new InfoCommand(this.phoneBook);
-                    executeCurrentCommand(currentCommand, this.commandInvoker);
-                    break;
 
                 case "exit":
                     System.exit(0);

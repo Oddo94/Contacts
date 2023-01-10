@@ -1,11 +1,13 @@
-package contacts;
+package contacts.model;
 
 import contacts.utils.enums.EditedElement;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public abstract class Contact {
+public abstract class Contact implements Serializable {
+    private static final long serialVersionUUID = 1L;
     protected String phoneNumber;
     protected LocalDateTime creationDate;
     protected LocalDateTime updatedDate;
@@ -28,7 +30,7 @@ public abstract class Contact {
         return this.phoneNumber;
     }
 
-    protected void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         if(isValid(phoneNumber)) {
             this.phoneNumber = phoneNumber;
         } else {

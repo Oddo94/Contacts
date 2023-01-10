@@ -1,9 +1,8 @@
-package contacts;
+package contacts.model;
 
+import contacts.model.Contact;
 import contacts.utils.enums.EditedElement;
-import contacts.utils.enums.Gender;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

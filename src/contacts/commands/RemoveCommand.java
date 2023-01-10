@@ -1,4 +1,7 @@
-package contacts;
+package contacts.commands;
+
+import contacts.PhoneBook;
+import contacts.commands.Command;
 
 import java.util.Scanner;
 

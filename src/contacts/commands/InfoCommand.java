@@ -1,6 +1,8 @@
-package contacts;
+package contacts.commands;
 
-import java.util.List;
+import contacts.PhoneBook;
+import contacts.commands.Command;
+
 import java.util.Scanner;
 
 public class InfoCommand implements Command {

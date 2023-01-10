@@ -1,5 +1,8 @@
-package contacts;
+package contacts.commands;
 
+import contacts.model.CompanyContact;
+import contacts.model.PersonContact;
+import contacts.PhoneBook;
 import contacts.utils.enums.ContactType;
 import contacts.utils.enums.EditedElement;
 

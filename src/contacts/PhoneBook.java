@@ -1,5 +1,8 @@
 package contacts;
 
+import contacts.model.CompanyContact;
+import contacts.model.Contact;
+import contacts.model.PersonContact;
 import contacts.utils.enums.ContactType;
 import contacts.utils.enums.EditedElement;
 import contacts.utils.enums.Gender;

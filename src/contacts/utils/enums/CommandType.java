@@ -1,4 +1,4 @@
-package contacts;
+package contacts.utils.enums;
 
 public enum CommandType {
     ADD,
