@@ -2,6 +2,7 @@ package contacts;
 
 import contacts.commands.*;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class InputManager {
@@ -9,11 +10,13 @@ public class InputManager {
     private PhoneBook phoneBook;
     private Invoker commandInvoker;
 
-    public InputManager() {
+    public InputManager(boolean saveContactsToFile, File storageFile) {
         scanner = new Scanner(System.in);
-
-        phoneBook = new PhoneBook();
         commandInvoker = new Invoker();
+
+        phoneBook = new PhoneBook(saveContactsToFile, storageFile);
+
+
     }
 
     public void manageUserInput() {

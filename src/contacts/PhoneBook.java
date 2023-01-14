@@ -1,5 +1,6 @@
 package contacts;
 
+import contacts.io.FileManager;
 import contacts.model.CompanyContact;
 import contacts.model.Contact;
 import contacts.model.PersonContact;
@@ -7,6 +8,7 @@ import contacts.utils.enums.ContactType;
 import contacts.utils.enums.EditedElement;
 import contacts.utils.enums.Gender;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,13 +16,19 @@ import java.util.List;
 
 public class PhoneBook {
     private ArrayList<Contact> contactsList;
+    private File storageFile;
+    boolean saveContactsToFile;
 
-    public PhoneBook() {
+    public PhoneBook(boolean saveContactsToFile, File storageFile) {
         this.contactsList = new ArrayList<>();
+        this.saveContactsToFile = saveContactsToFile;
+        this.storageFile = storageFile;
     }
 
     public int addContact(Contact contact) {
         boolean hasInsertedRecord = contactsList.add(contact);
+
+        saveContactListToFile(this.contactsList);
 
         if(hasInsertedRecord) {
             return 0;
@@ -118,10 +126,20 @@ public class PhoneBook {
     }
 
     public int getNumberOfContacts() {
+        //Retrieves the contacts list from the storage file if this exists
+        if(saveContactsToFile && storageFile != null) {
+            this.contactsList = retrieveContactListFromFile();
+        }
+
         return contactsList.size();
     }
 
     public ArrayList<Contact> getContactsList() {
+        //Retrieves the contacts list from the storage file if this exists
+        if(saveContactsToFile && storageFile != null) {
+           this.contactsList = retrieveContactListFromFile();
+        }
+
         return this.contactsList;
     }
 
@@ -188,6 +206,20 @@ public class PhoneBook {
         }
 
         return gender;
+    }
+
+    private void saveContactListToFile(ArrayList<Contact> contactsList) {
+        if(saveContactsToFile && storageFile != null) {
+            FileManager fileManager = new FileManager(storageFile);
+            fileManager.saveContactsToFile(contactsList);
+        }
+    }
+
+    private ArrayList<Contact> retrieveContactListFromFile() {
+        FileManager fileManager = new FileManager(storageFile);
+        ArrayList<Contact> retrievedContacts = fileManager.getContactsFromFile();
+
+        return retrievedContacts;
     }
 
 }

@@ -16,24 +16,35 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-//        InputManager inputManager = new InputManager();
-//        inputManager.manageUserInput();
+        boolean saveContactsToFile = args[0] != null ? true : false;
 
-        CompanyContact companyContact= new CompanyContact("Tesla", "1 Tesla Road Austin", "0756488933", LocalDateTime.now(), LocalDateTime.now());
-        PersonContact personContact = new PersonContact("Smith", "Jason", "0745388922", LocalDate.parse("1994-02-15"), Gender.MALE, LocalDateTime.now(), LocalDateTime.now());
+        File file = null;
+        FileManager fileManager= null;
+        if(saveContactsToFile) {
+            file = new File(String.format("D:\\IAP\\JetBrains Academy projects\\Contacts\\Contacts\\task\\src\\%s", args[0]));
+            fileManager = new FileManager(file);
 
-        ArrayList<Contact> contactList = new ArrayList<>(Arrays.asList(companyContact, personContact));
-        File file = new File("D:\\IAP\\JetBrains Academy projects\\Contacts\\Contacts\\task\\src\\phonebook.db");
-        FileManager fileManager = new FileManager(file);
+            if(!file.exists()) {
+                fileManager.createStorageFile();
+            }
+        }
 
-        fileManager.saveContactsToFile(contactList);
+           InputManager inputManager = new InputManager(saveContactsToFile, file);
+           inputManager.manageUserInput();
 
-        ArrayList<Contact> outputList = fileManager.getContactsFromFile();
-        outputList.stream()
-                .map(x -> x.getClass() == PersonContact.class ? ((PersonContact) x).toString() : ((CompanyContact) x).toString())
-                .forEach(System.out::println);
-
-
+        //fileManager.createStorageFile();
+//
+//        CompanyContact companyContact= new CompanyContact("Tesla", "1 Tesla Road Austin", "0756488933", LocalDateTime.now(), null);
+//        PersonContact personContact = new PersonContact("Smith", "Jason", "0745388922", LocalDate.parse("1994-02-15"), Gender.MALE, LocalDateTime.now(), null);
+//
+//        ArrayList<Contact> contactList = new ArrayList<>(Arrays.asList(companyContact, personContact));
+//
+//        fileManager.saveContactsToFile(contactList);
+//
+//        ArrayList<Contact> outputList = fileManager.getContactsFromFile();
+//        outputList.stream()
+//                .map(x -> x.getClass() == PersonContact.class ? ((PersonContact) x).toString() + "\n" : ((CompanyContact) x).toString() + "\n")
+//                .forEach(System.out::println);
 
     }
 }

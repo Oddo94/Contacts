@@ -59,4 +59,17 @@ public class FileManager {
 
         return contactList;
     }
+
+    public void createStorageFile() {
+        if(storageFile == null) {
+            return;
+        }
+
+        try {
+            storageFile.createNewFile();
+        } catch (IOException ex) {
+            System.err.println(String.format("Unable to create the storage file!Reason: %s", ex.getMessage()));
+        }
+
+    }
 }

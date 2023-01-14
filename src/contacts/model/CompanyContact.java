@@ -36,8 +36,8 @@ public class CompanyContact extends Contact {
 
     public String toString() {
         DateTimeFormatter customFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        String formattedCreationDate = this.creationDate.format(customFormat);
-        String formattedUpdatedDate = this.updatedDate.format(customFormat);
+        String formattedCreationDate = this.creationDate != null ? this.creationDate.format(customFormat) : "null";
+        String formattedUpdatedDate = this.updatedDate != null ? this.updatedDate.format(customFormat) : "null";
 
         return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s", this.organizationName, this.address, this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
     }
