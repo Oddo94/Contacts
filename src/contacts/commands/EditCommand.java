@@ -10,11 +10,13 @@ import java.util.Scanner;
 
 public class EditCommand implements Command {
     private PhoneBook phoneBook;
+    private int recordNumber;
     private Scanner scanner;
 
-    public EditCommand(PhoneBook phoneBook) {
+    public EditCommand(PhoneBook phoneBook, int recordNumber) {
         this.phoneBook = phoneBook;
         this.scanner = new Scanner(System.in);
+        this.recordNumber = recordNumber;
     }
 
 
@@ -27,11 +29,11 @@ public class EditCommand implements Command {
             return;
         }
 
-        phoneBook.displayContacts(phoneBook.getContactsList(), false);
+        //phoneBook.displayContacts(phoneBook.getContactsList(), false);
 
-        System.out.println("Select a record:");
-        int recordNumber = scanner.nextInt();
-        scanner.nextLine();
+        //System.out.println("Select a record:");
+        //int recordNumber = scanner.nextInt();
+        //scanner.nextLine();
         int actualIndex = recordNumber - 1;
 
 
@@ -48,10 +50,10 @@ public class EditCommand implements Command {
         if(executionResult == -1) {
             System.out.println("Unable to update the specified record!");
         } else {
-            System.out.println("The record updated!");
+            System.out.println("Saved");
         }
 
-        System.out.println();
+        //System.out.println();
 
     }
 

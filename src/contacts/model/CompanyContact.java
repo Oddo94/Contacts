@@ -39,7 +39,7 @@ public class CompanyContact extends Contact {
         String formattedCreationDate = this.creationDate != null ? this.creationDate.format(customFormat) : "null";
         String formattedUpdatedDate = this.updatedDate != null ? this.updatedDate.format(customFormat) : "null";
 
-        return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s", this.organizationName, this.address, this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
+        return String.format("Organization name: %s\nAddress: %s\nNumber: %s\nTime created: %s\nTime last edit: %s\n", this.organizationName, this.address, this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
     }
 
     @Override

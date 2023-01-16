@@ -34,7 +34,7 @@ public class InputManager {
 
 
                 case "list":
-                    currentCommand = new InfoCommand(this.phoneBook);
+                    currentCommand = new ListCommand(this.phoneBook);
                     executeCurrentCommand(currentCommand, this.commandInvoker);
                     break;
 
@@ -66,6 +66,28 @@ public class InputManager {
             }
         }
     }
+
+//    private void performActionOnSelectedRecord(PhoneBook phoneBook, Invoker commandInvoker) {
+//        System.out.println("[record] Enter action (edit, delete, menu):");
+//        String userInput = scanner.nextLine();
+//
+//        Command currentCommand = null;
+//        switch(userInput) {
+//            case "remove":
+//                currentCommand = new RemoveCommand(this.phoneBook);
+//                executeCurrentCommand(currentCommand, this.commandInvoker);
+//                break;
+//
+//            case "edit" :
+//                currentCommand = new EditCommand(this.phoneBook);
+//                executeCurrentCommand(currentCommand, this.commandInvoker);
+//                break;
+//
+//            default:
+//                System.out.println("Invalid input!");
+//                break;
+//        }
+//    }
 
     private void executeCurrentCommand(Command command, Invoker commandInvoker) {
         commandInvoker.setCommand(command);
