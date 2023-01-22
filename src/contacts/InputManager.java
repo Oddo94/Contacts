@@ -23,11 +23,11 @@ public class InputManager {
 
     public void manageUserInput() {
         //Creates the command tree
-        Command editCommand = new EditCommand(phoneBook, 1);
+        Command editCommand = new EditCommand(phoneBook);
         CompositeCommand menuCommand = new MenuCommand(phoneBook);
 
         TreeMap<String, Command> commonChildCommands = new TreeMap<>();
-        commonChildCommands.put("edit", new EditCommand(phoneBook, 1));
+        commonChildCommands.put("edit", new EditCommand(phoneBook));
         commonChildCommands.put("delete", new RemoveCommand(phoneBook));
         commonChildCommands.put("menu", menuCommand);
 

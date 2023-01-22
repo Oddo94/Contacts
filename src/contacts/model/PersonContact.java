@@ -71,7 +71,7 @@ public class PersonContact extends Contact {
         String formattedCreationDate = this.creationDate != null ? this.creationDate.format(customFormat) : "null";
         String formattedUpdatedDate = this.updatedDate != null ? this.updatedDate.format(customFormat) : "null";
 
-        return String.format("Name: %s\nSurname: %s\nBirth date: %s\nGender: %s\nNumber: %s\nTime created: %s\nTime last edit: %s\n",
+        return String.format("Name: %s\nSurname: %s\nBirth date: %s\nGender: %s\nNumber: %s\nTime created: %s\nTime last edit: %s",
                 this.name, this.surname, (this.birthDate != null ? this.birthDate : "[no data]"), this.gender.getGenderName(), this.phoneNumber, formattedCreationDate, formattedUpdatedDate);
     }
 

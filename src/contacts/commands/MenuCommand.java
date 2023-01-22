@@ -54,6 +54,10 @@ public class MenuCommand extends CompositeCommand {
 
             case "search":
                 break;
+
+            case "exit":
+                super.getChild("exit").execute();
+                break;
         }
     }
 }

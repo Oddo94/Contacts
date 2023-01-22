@@ -20,17 +20,25 @@ public class PhoneBook {
     boolean saveContactsToFile;
 
     public PhoneBook(boolean saveContactsToFile, File storageFile) {
-        this.contactsList = new ArrayList<>();
         this.saveContactsToFile = saveContactsToFile;
         this.storageFile = storageFile;
+
+        //Loads the contacts from the storage file if the file exists, otherwise it just initializes the in-memory storage
+        if(saveContactsToFile && storageFile != null) {
+            this.contactsList = retrieveContactListFromFile();
+        } else {
+            this.contactsList = new ArrayList<>();
+        }
+
     }
 
     public int addContact(Contact contact) {
         boolean hasInsertedRecord = contactsList.add(contact);
 
-        saveContactListToFile(this.contactsList);
-
         if(hasInsertedRecord) {
+            //Saves the contacts list to the storage file after the specified contact is removed
+            saveContactListToFile(this.contactsList);
+
             return 0;
         }
 
@@ -41,6 +49,9 @@ public class PhoneBook {
         Contact contact = contactsList.remove(contactIndex);
 
         if(contact != null) {
+            //Saves the contacts list to the storage file after the specified contact is removed
+            saveContactListToFile(this.contactsList);
+
             return 0;
         }
 
@@ -101,6 +112,9 @@ public class PhoneBook {
                 return -1;
         }
 
+        //Saves the contacts list to the storage file after the specified contact is updated
+        saveContactListToFile(this.contactsList);
+
         return 0;
     }
 
@@ -122,6 +136,9 @@ public class PhoneBook {
                 return -1;
         }
 
+        //Saves the contacts list to the storage file after the specified contact is updated
+        saveContactListToFile(this.contactsList);
+
         return 0;
     }
 
@@ -137,7 +154,7 @@ public class PhoneBook {
     public ArrayList<Contact> getContactsList() {
         //Retrieves the contacts list from the storage file if this exists
         if(saveContactsToFile && storageFile != null) {
-           this.contactsList = retrieveContactListFromFile();
+            this.contactsList = retrieveContactListFromFile();
         }
 
         return this.contactsList;

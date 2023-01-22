@@ -16,7 +16,7 @@ public class AlterContactCommand  extends CompositeCommand {
         this.recordNumber = recordNumber;
         this.scanner = new Scanner(System.in);
 
-        super.addChild("edit", new EditCommand(phoneBook, recordNumber));
+        super.addChild("edit", new EditCommand(phoneBook));
         super.addChild("delete", new RemoveCommand(phoneBook));
         super.addChild("menu", null);
     }

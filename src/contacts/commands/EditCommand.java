@@ -1,6 +1,7 @@
 package contacts.commands;
 
 import contacts.model.CompanyContact;
+import contacts.model.Contact;
 import contacts.model.PersonContact;
 import contacts.PhoneBook;
 import contacts.utils.enums.ContactType;
@@ -13,7 +14,7 @@ public class EditCommand implements Command {
     private int recordNumber;
     private Scanner scanner;
 
-    public EditCommand(PhoneBook phoneBook, int recordNumber) {
+    public EditCommand(PhoneBook phoneBook) {
         this.phoneBook = phoneBook;
         this.scanner = new Scanner(System.in);
         this.recordNumber = recordNumber;
@@ -31,18 +32,22 @@ public class EditCommand implements Command {
 
         //phoneBook.displayContacts(phoneBook.getContactsList(), false);
 
-        //System.out.println("Select a record:");
-        //int recordNumber = scanner.nextInt();
-        //scanner.nextLine();
+//        System.out.println("Select a record:");
+//        int recordNumber = scanner.nextInt();
+//        scanner.nextLine();
         int actualIndex = recordNumber - 1;
 
+        Contact contactToUpdate = phoneBook.getContactByIndex(actualIndex);
+        Class contactClass = contactToUpdate.getClass();
 
-        Class contactClass = phoneBook.getContactByIndex(actualIndex).getClass();
+        Contact updatedContact = null;
 
         if(contactClass == PersonContact.class) {
             executionResult = updatePersonContact(actualIndex);
+            updatedContact = (PersonContact) contactToUpdate;
         } else if (contactClass == CompanyContact.class) {
             executionResult = updateCompanyContact(actualIndex);
+            updatedContact = (CompanyContact) contactToUpdate;
         }
 
 
@@ -51,13 +56,15 @@ public class EditCommand implements Command {
             System.out.println("Unable to update the specified record!");
         } else {
             System.out.println("Saved");
+            System.out.println(updatedContact.toString());
         }
-
-        //System.out.println();
-
     }
 
-    public int updatePersonContact(int index) {
+    public void setRecordNumberToUpdate(int recordNumber) {
+        this.recordNumber = recordNumber;
+    }
+
+    private int updatePersonContact(int index) {
         int executionResult = -1;
 
         System.out.println("Select a field (name, surname, birth, gender, number):");
@@ -102,7 +109,7 @@ public class EditCommand implements Command {
         return executionResult;
     }
 
-    public int updateCompanyContact(int index) {
+    private int updateCompanyContact(int index) {
         int executionResult = -1;
 
         System.out.println("Select a field (address, number):");
