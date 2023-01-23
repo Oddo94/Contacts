@@ -30,24 +30,33 @@ public class SearchCommand extends CompositeCommand {
     }
 
     public void execute() {
-        System.out.println("Enter search query:");
-        String searchQuery = scanner.nextLine();
+        List<Contact> contactList = phoneBook.getContactsList();
+        List<Contact> searchResults = performRecordSearch(contactList);
 
         while(true) {
             System.out.println("[search] Enter action ([number], back, again):");
             String userInput = scanner.nextLine();
 
-            List<Contact> contactList = phoneBook.getContactsList();
+//            List<Contact> contactList = phoneBook.getContactsList();
             try {
                 int recordNumber = Integer.parseInt(userInput);
-                //Sets the record number that needs to be updated in the edit command object
-                ((EditCommand)childCommands.get("edit")).setRecordNumberToUpdate(recordNumber);
-                //int recordIndex = recordNumber - 1;
 
                 int recordIndex = recordNumber - 1;
                 if (recordIndex >= 0 && recordIndex < contactList.size()) {
                     phoneBook.displayContactByIndex(recordIndex, contactList);
+                } else {
+                    System.out.println("Invalid record number!");
+                    return;
                 }
+                //Retrieves the contact based on the user supplied record number
+                Contact selectedContact = searchResults.get(recordIndex);
+
+                //Retrieves the index of the record inside the original contact list
+                int originalListRecordNumber = contactList.indexOf(selectedContact) + 1;
+                //Sets the record number that needs to be updated in the edit command object
+                ((EditCommand)childCommands.get("edit")).setRecordNumberToUpdate(originalListRecordNumber);
+                //int recordIndex = recordNumber - 1;
+
 
                 while(true) {
                     System.out.println("\n[record] Enter action (edit, delete, menu):");
@@ -74,16 +83,41 @@ public class SearchCommand extends CompositeCommand {
 
             } catch (NumberFormatException ex) {
                 if("back".equals(userInput)) {
-                    return;
+                    //return;
+                    menuCommand.execute();
                 } else if("again".equals(userInput)) {
                     //Moves to the next iteration of the loop and displays the search menu again
-                    continue;
+                    //continue;
+                    performRecordSearch(contactList);
                 }
             }
         }
     }
 
-    private List<Contact> searchRecord(List<Contact> contactList, String searchQuery) {
+    private List<Contact> performRecordSearch(List<Contact> contactList) {
+        System.out.println("Enter search query:");
+        String searchQuery = scanner.nextLine();
+
+        List<Contact> searchResults = searchRecords(contactList, searchQuery);
+
+        if(searchResults.size() > 0) {
+            System.out.println(String.format("Found %d results:", searchResults.size()));
+
+            //Prints the search results
+            searchResults
+                    .stream()
+                    .map(contact -> String.format("%d. %s", searchResults.indexOf(contact) + 1, contact.getFullName()))
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("No results found!");
+            //return;
+        }
+
+        return searchResults;
+
+    }
+
+    private List<Contact> searchRecords(List<Contact> contactList, String searchQuery) {
 
         List<Contact> searchResults = contactList
                 .stream()

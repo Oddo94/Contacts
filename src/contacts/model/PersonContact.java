@@ -19,7 +19,7 @@ public class PersonContact extends Contact {
     public PersonContact() {}
 
     public PersonContact(String name, String surname, String phoneNumber, LocalDate birthDate, Gender gender, LocalDateTime createdDate, LocalDateTime updatedDate) {
-        super(phoneNumber, createdDate, updatedDate);
+        super(String.format("%s %s", name, surname), phoneNumber, createdDate, updatedDate);
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;

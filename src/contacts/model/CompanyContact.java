@@ -13,7 +13,7 @@ public class CompanyContact extends Contact {
     private String address;
 
     public CompanyContact(String organizationName, String address, String phoneNumber, LocalDateTime creationDate, LocalDateTime updatedDate) {
-        super(phoneNumber, creationDate, updatedDate);
+        super(organizationName, phoneNumber, creationDate, updatedDate);
         this.organizationName = organizationName;
         this.address = address;
     }

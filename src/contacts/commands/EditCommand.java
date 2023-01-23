@@ -57,6 +57,7 @@ public class EditCommand implements Command {
         } else {
             System.out.println("Saved");
             System.out.println(updatedContact.toString());
+
         }
     }
 

@@ -73,21 +73,32 @@ public class PhoneBook {
             executionResult = editCompanyRecord(recordNumber, contactType, editedElement, newValue);
         }
 
+        if(executionResult != -1) {
+            saveContactListToFile(this.contactsList);
+        }
+
         return executionResult;
 
     }
 
     private int editPersonRecord(int recordIndex, ContactType contactType, EditedElement editedElement, String newValue) {
         PersonContact personContact = (PersonContact) contactsList.get(recordIndex);
+        String fullName = null;
 
         switch(editedElement) {
             case NAME:
                 personContact.setName(newValue);
+                //Updates the full name field of the base class
+                fullName = String.format("%s %s", newValue, personContact.getSurname());
+                personContact.setFullName(fullName);
                 personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 
             case SURNAME:
                 personContact.setSurname(newValue);
+                //Updates the full name field of the base class
+                fullName = String.format("%s %s", personContact.getName(), newValue);
+                personContact.setFullName(fullName);
                 personContact.setUpdatedDate(LocalDateTime.now());
                 break;
 

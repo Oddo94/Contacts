@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public abstract class Contact implements Serializable {
     private static final long serialVersionUUID = 1L;
+    protected String fullName;
     protected String phoneNumber;
     protected LocalDateTime creationDate;
     protected LocalDateTime updatedDate;
@@ -16,7 +17,9 @@ public abstract class Contact implements Serializable {
 
     }
 
-    protected Contact(String phoneNumber, LocalDateTime creationDate, LocalDateTime updatedDate) {
+    protected Contact(String fullName, String phoneNumber, LocalDateTime creationDate, LocalDateTime updatedDate) {
+        this.fullName = fullName;
+
         if(isValid(phoneNumber)) {
             this.phoneNumber = phoneNumber;
         } else {
@@ -26,7 +29,15 @@ public abstract class Contact implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    protected String getPhoneNumber() {
+    public String getFullName() {
+        return this.fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
         return this.phoneNumber;
     }
 
