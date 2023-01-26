@@ -1,7 +1,6 @@
 package contacts.commands;
 
 import contacts.PhoneBook;
-import contacts.commands.Command;
 
 public class CountCommand implements Command {
     private PhoneBook phoneBook;

@@ -3,6 +3,7 @@ package contacts.io;
 import contacts.model.Contact;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 public class FileManager {
@@ -32,7 +33,11 @@ public class FileManager {
     }
 
     public ArrayList<Contact> getContactsFromFile() {
-        if( storageFile == null) {
+        if(storageFile == null) {
+            return new ArrayList<Contact>();
+        }
+
+        if(storageFile.length() == 0L) {
             return new ArrayList<Contact>();
         }
 

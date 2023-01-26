@@ -1,47 +1,73 @@
 package contacts.commands;
 
 import contacts.PhoneBook;
+import contacts.model.Contact;
 
+import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 
-public class ListCommand implements Command {
+public class ListCommand extends CompositeCommand {
     private PhoneBook phoneBook;
     private Scanner scanner;
+    private TreeMap<String, Command> childCommands;
+    private CompositeCommand menuCommand;
 
-    public ListCommand(PhoneBook phoneBook) {
+    public ListCommand(TreeMap<String, Command> childCommands, CompositeCommand menuCommand,  PhoneBook phoneBook) {
+        super(childCommands);
         this.phoneBook = phoneBook;
         this.scanner = new Scanner(System.in);
+        this.childCommands = childCommands;
+        this.menuCommand = menuCommand;
     }
 
-    @Override
     public void execute() {
-        phoneBook.displayContacts(phoneBook.getContactsList(), false);
+        List<Contact> contactList = phoneBook.getContactsList();
+        phoneBook.displayContacts(contactList, false);
 
-        while(true) {
-            System.out.println("[list] Enter action ([number], back):");
-            String userInput = scanner.nextLine();
+        System.out.println("\n[list] Enter action ([number], back):");
+        String userInput = scanner.nextLine();
 
-            try {
-                while(true) {
-                    int recordNumber = Integer.parseInt(userInput);
-                    int recordIndex = recordNumber - 1;
+        try {
+                int recordNumber = Integer.parseInt(userInput);
+                //Sets the record number that needs to be updated in the edit command object
+                ((EditCommand)childCommands.get("edit")).setRecordNumberToUpdate(recordNumber);
 
-                    phoneBook.displayContactByIndex(recordIndex, phoneBook.getContactsList());
-
-//                    Command alterContactCommand = new AlterContactCommand(this.phoneBook, recordNumber);
-//                    Invoker commandInvoker = new Invoker();
-//                    commandInvoker.setCommand(alterContactCommand);
-//                    commandInvoker.executeCommand();
+                int recordIndex = recordNumber - 1;
+                if (recordIndex >= 0 && recordIndex < contactList.size()) {
+                    phoneBook.displayContactByIndex(recordIndex, contactList);
                 }
+               while(true) {
+                   System.out.println("\n[record] Enter action (edit, delete, menu):");
+                   userInput = scanner.nextLine();
 
-            } catch(NumberFormatException ex) {
-                if("back".equals(userInput)) {
-                    return;
-                } else {
-                    System.out.println("Invalid command!");
-                }
+                   switch(userInput) {
+                       case "edit":
+                           childCommands.get("edit").execute();
+                           break;
+
+                       case "delete":
+                           childCommands.get("delete").execute();
+                           break;
+
+                       case "menu":
+                           menuCommand.execute();
+                           break;
+
+                       default:
+                           System.out.println("Invalid command inside list menu!");
+
+                   }
+
+               }
+
+        } catch(NumberFormatException ex) {
+            if("back".equals(userInput)) {
+                menuCommand.execute();
+            } else {
+                System.out.println("Invalid command!");
             }
-
         }
     }
+
 }

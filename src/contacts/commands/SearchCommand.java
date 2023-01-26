@@ -4,7 +4,6 @@ import contacts.PhoneBook;
 import contacts.model.CompanyContact;
 import contacts.model.Contact;
 import contacts.model.PersonContact;
-import jdk.jshell.spi.ExecutionControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +33,14 @@ public class SearchCommand extends CompositeCommand {
         List<Contact> searchResults = performRecordSearch(contactList);
 
         while(true) {
-            System.out.println("[search] Enter action ([number], back, again):");
+            System.out.println("\n[search] Enter action ([number], back, again):");
             String userInput = scanner.nextLine();
 
-//            List<Contact> contactList = phoneBook.getContactsList();
             try {
                 int recordNumber = Integer.parseInt(userInput);
 
                 int recordIndex = recordNumber - 1;
-                if (recordIndex >= 0 && recordIndex < contactList.size()) {
+                if (searchResults.size() > 0 && (recordIndex >= 0 && recordIndex < contactList.size())) {
                     phoneBook.displayContactByIndex(recordIndex, contactList);
                 } else {
                     System.out.println("Invalid record number!");
@@ -55,8 +53,6 @@ public class SearchCommand extends CompositeCommand {
                 int originalListRecordNumber = contactList.indexOf(selectedContact) + 1;
                 //Sets the record number that needs to be updated in the edit command object
                 ((EditCommand)childCommands.get("edit")).setRecordNumberToUpdate(originalListRecordNumber);
-                //int recordIndex = recordNumber - 1;
-
 
                 while(true) {
                     System.out.println("\n[record] Enter action (edit, delete, menu):");
@@ -83,11 +79,9 @@ public class SearchCommand extends CompositeCommand {
 
             } catch (NumberFormatException ex) {
                 if("back".equals(userInput)) {
-                    //return;
                     menuCommand.execute();
                 } else if("again".equals(userInput)) {
                     //Moves to the next iteration of the loop and displays the search menu again
-                    //continue;
                     performRecordSearch(contactList);
                 }
             }
@@ -110,7 +104,6 @@ public class SearchCommand extends CompositeCommand {
                     .forEach(System.out::println);
         } else {
             System.out.println("No results found!");
-            //return;
         }
 
         return searchResults;
@@ -133,7 +126,7 @@ public class SearchCommand extends CompositeCommand {
             return false;
         }
 
-        Pattern pattern = Pattern.compile(searchQuery);
+        Pattern pattern = Pattern.compile(searchQuery, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(searchInput);
 
         return matcher.find();

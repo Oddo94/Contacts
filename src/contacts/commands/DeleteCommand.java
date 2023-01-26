@@ -1,15 +1,14 @@
 package contacts.commands;
 
 import contacts.PhoneBook;
-import contacts.commands.Command;
 
 import java.util.Scanner;
 
-public class RemoveCommand implements Command {
+public class DeleteCommand implements Command {
     private PhoneBook phoneBook;
     private Scanner scanner;
 
-    public RemoveCommand(PhoneBook phoneBook) {
+    public DeleteCommand(PhoneBook phoneBook) {
         this.phoneBook = phoneBook;
         this.scanner = new Scanner(System.in);
     }

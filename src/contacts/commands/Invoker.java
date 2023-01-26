@@ -1,7 +1,5 @@
 package contacts.commands;
 
-import contacts.commands.Command;
-
 public class Invoker {
     private Command command;
 
